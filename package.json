@@ -9,7 +9,7 @@
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@wordpress/api-fetch": "^3.8.0",
-    "@wordpress/block-editor": "^3.4.0",
+    "@wordpress/block-editor": "^3.7.1",
     "@wordpress/blocks": "^6.2.0",
     "@wordpress/components": "^8.5.0",
     "@wordpress/editor": "^9.9.0",
