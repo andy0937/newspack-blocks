@@ -17,6 +17,10 @@
     "description": {
       "type": "string",
       "default": ""
+    },
+    "rssFeedUrl": {
+      "type": "string",
+      "default": ""
     }
   }
 }

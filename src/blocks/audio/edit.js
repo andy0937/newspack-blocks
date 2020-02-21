@@ -21,13 +21,21 @@ import './view.scss';
 const Edit = ( { attributes, setAttributes } ) => {
 	useEffect( () => {
 		enableAudioPlayers();
-	}, [ attributes.source ] );
+	}, [ attributes.source, attributes.rssFeedUrl ] );
 
 	return (
 		<Fragment>
 			<AudioPlayer attributes={ attributes } isInEditor />
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings' ) }>
+				<PanelBody title={ __( 'RSS Feed' ) }>
+					<TextControl
+						label={ __( 'RSS Feed URL' ) }
+						value={ attributes.rssFeedUrl }
+						onChange={ value => setAttributes( { rssFeedUrl: value } ) }
+					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Settings' ) } initialOpen={ false }>
 					<TextControl
 						label={ __( 'Source' ) }
 						value={ attributes.source }

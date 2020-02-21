@@ -39,31 +39,28 @@ const ModalButton = ( { icon, children } ) => (
 );
 
 const AudioPlayer = ( { attributes } ) => {
-	if ( ! attributes.source ) {
-		return 'Please add an audio source';
+	if ( ! attributes.source && ! attributes.rssFeedUrl ) {
+		return 'Please add an audio source or an RSS Feed URL';
 	}
 	return (
-		<div className={ AUDIO_PLAYER_CLASSNAMES.BASE }>
+		<div className={ AUDIO_PLAYER_CLASSNAMES.BASE } data-rss-feed-url={ attributes.rssFeedUrl }>
 			<button className={ AUDIO_PLAYER_CLASSNAMES.PLAY_BUTTON }>
 				<Icon name="play_arrow" className={ AUDIO_PLAYER_CLASSNAMES.PLAY_ICON } />
 			</button>
-			{ attributes.imageUrl && (
-				<div
-					className={ AUDIO_PLAYER_CLASSNAMES.IMAGE }
-					style={ {
-						backgroundImage: `url('${ attributes.imageUrl }')`,
-					} }
-				/>
-			) }
 
-			{ ( attributes.title || attributes.description ) && (
-				<div className={ AUDIO_PLAYER_CLASSNAMES.TEXT }>
-					<div className={ AUDIO_PLAYER_CLASSNAMES.TITLE }>{ attributes.title || '' }</div>
-					<div className={ AUDIO_PLAYER_CLASSNAMES.DESCRIPTION }>
-						{ attributes.description || '' }
-					</div>
+			<div
+				className={ AUDIO_PLAYER_CLASSNAMES.IMAGE }
+				style={ {
+					backgroundImage: `url('${ attributes.imageUrl }')`,
+				} }
+			/>
+
+			<div className={ AUDIO_PLAYER_CLASSNAMES.TEXT }>
+				<div className={ AUDIO_PLAYER_CLASSNAMES.TITLE }>{ attributes.title || '' }</div>
+				<div className={ AUDIO_PLAYER_CLASSNAMES.DESCRIPTION }>
+					{ attributes.description || '' }
 				</div>
-			) }
+			</div>
 
 			<Modal
 				className={ AUDIO_PLAYER_CLASSNAMES.OPTIONS_BUTTON }
@@ -89,7 +86,7 @@ const AudioPlayer = ( { attributes } ) => {
 			<button className={ AUDIO_PLAYER_CLASSNAMES.CLOSE }>
 				<Icon name="close" />
 			</button>
-			<audio src={ attributes.source } />
+			<audio src={ attributes.source || '' } />
 		</div>
 	);
 };

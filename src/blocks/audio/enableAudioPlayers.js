@@ -1,3 +1,5 @@
+import RSSParser from 'rss-parser/dist/rss-parser.min.js';
+
 import { AUDIO_PLAYER_CLASSNAMES as CLASSNAMES } from './consts';
 
 const padTime = time => time.toString().padStart( 2, '0' );
@@ -58,6 +60,39 @@ const enableSingleAudioPlayer = playerEl => {
 		`.${ CLASSNAMES.SLIDER_INDICATOR }`
 	);
 	const modalTriggers = playerEl.querySelectorAll( `.${ CLASSNAMES.MODAL_TRIGGER }` );
+	// Info UI
+	const imageEl = playerEl.querySelector( `.${ CLASSNAMES.IMAGE }` );
+	const titleEl = playerEl.querySelector( `.${ CLASSNAMES.TITLE }` );
+	const descriptionEl = playerEl.querySelector( `.${ CLASSNAMES.DESCRIPTION }` );
+
+	// RSS Feed handling
+	const rssFeedUrl = playerEl.getAttribute( 'data-rss-feed-url' );
+	if ( rssFeedUrl ) {
+		const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+
+		const parser = new RSSParser();
+		parser.parseURL( CORS_PROXY + rssFeedUrl + '/?format=xml', ( err, feed ) => {
+			if ( err ) {
+				throw err;
+			}
+			if ( feed.items.length > 0 ) {
+				const {
+					title,
+					// link,
+					contentSnippet: description,
+					enclosure: { url },
+					itunes: { image: imageUrl },
+				} = feed.items[ 0 ];
+				audioEl.setAttribute( 'src', url );
+				audioEl.load();
+
+				imageEl.style.backgroundImage = `url('${ imageUrl }')`;
+				titleEl.innerText = title;
+				descriptionEl.innerText = description.replace( /\n/g, ' ' );
+				updateDurationBeforePlay();
+			}
+		} );
+	}
 
 	// methods
 	const handlePlay = () => {
@@ -94,12 +129,17 @@ const enableSingleAudioPlayer = playerEl => {
 	updateVolumeUI( 100 );
 
 	// initial update, so that the duration is displayed before playing
-	const updateProgressUIInterval = setInterval( () => {
-		if ( audioEl.readyState > 0 ) {
-			updateProgressUI();
-			clearInterval( updateProgressUIInterval );
-		}
-	}, 100 );
+	const updateDurationBeforePlay = () => {
+		const updateProgressUIInterval = setInterval( () => {
+			if ( audioEl.readyState > 0 ) {
+				updateProgressUI();
+				clearInterval( updateProgressUIInterval );
+			}
+		}, 100 );
+	};
+	if ( audioEl.getAttribute( 'src' ) ) {
+		updateDurationBeforePlay();
+	}
 
 	// event handlers
 	audioEl.onplay = handlePlay;
