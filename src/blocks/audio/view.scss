@@ -47,6 +47,8 @@
 		border: none;
 		display: flex;
 		justify-content: center;
+		margin: 0;
+		padding: 0;
 		.material-icons {
 			font-size: 40px;
 			@include flex-center;
@@ -72,7 +74,7 @@
 		justify-content: center;
 		padding: 10px 20px;
 	}
-	&__text {
+	&__title {
 		font-weight: bold;
 	}
 	&__description {
