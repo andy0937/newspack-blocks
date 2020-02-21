@@ -61,3 +61,10 @@ function newspack_blocks_post_subtitle_detection() {
 	);
 }
 add_action( 'enqueue_block_editor_assets', 'newspack_blocks_post_subtitle_detection' );
+
+add_action('admin_footer', 'newspack_blocks_add_material_icons_font');
+function newspack_blocks_add_material_icons_font() {
+	?>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <?php
+}

@@ -13,3 +13,4 @@ function newspack_blocks_audio_block_assets(  ) {
 }
 
 add_action( 'wp_footer', 'newspack_blocks_audio_block_assets' );
+add_action( 'wp_footer', 'newspack_blocks_add_material_icons_font' );
