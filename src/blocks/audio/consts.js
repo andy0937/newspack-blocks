@@ -3,6 +3,10 @@ const BASE = 'newspack-audio-player';
 export const AUDIO_PLAYER_CLASSNAMES = {
 	BASE,
 
+	// States
+	IS_LOADING: `${ BASE }--is-loading`,
+
+	// Elements
 	PLAY_BUTTON: `${ BASE }__play`,
 	PLAY_ICON: `${ BASE }__play__icon`,
 

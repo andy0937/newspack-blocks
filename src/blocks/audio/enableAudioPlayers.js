@@ -89,7 +89,7 @@ const enableSingleAudioPlayer = playerEl => {
 				imageEl.style.backgroundImage = `url('${ imageUrl }')`;
 				titleEl.innerText = title;
 				descriptionEl.innerText = description.replace( /\n/g, ' ' );
-				updateDurationBeforePlay();
+				waitForAudioLoad();
 			}
 		} );
 	}
@@ -129,16 +129,17 @@ const enableSingleAudioPlayer = playerEl => {
 	updateVolumeUI( 100 );
 
 	// initial update, so that the duration is displayed before playing
-	const updateDurationBeforePlay = () => {
+	const waitForAudioLoad = () => {
 		const updateProgressUIInterval = setInterval( () => {
 			if ( audioEl.readyState > 0 ) {
 				updateProgressUI();
+				playerEl.classList.remove( CLASSNAMES.IS_LOADING );
 				clearInterval( updateProgressUIInterval );
 			}
 		}, 100 );
 	};
 	if ( audioEl.getAttribute( 'src' ) ) {
-		updateDurationBeforePlay();
+		waitForAudioLoad();
 	}
 
 	// event handlers

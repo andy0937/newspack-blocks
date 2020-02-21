@@ -2,15 +2,38 @@
 @import './scss/mixins.scss';
 
 .newspack-audio-player {
+	position: relative;
 	display: flex;
 	height: $audio-player-height;
 	color: #fff;
 	background: $audio-player-background;
 	font-family: sans-serif;
+	transition: all 200ms;
 
 	// utility classes
 	&__relative {
 		position: relative;
+	}
+
+	// states
+	&:after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		transition: all 300ms;
+	}
+	&--is-loading {
+		&:after {
+			pointer-events: all;
+			background: rgba( #fff, 0.5 );
+		}
+	}
+	&--is-closed {
+		transform: translateY( 100% );
+		opacity: 0;
+		pointer-events: none;
 	}
 
 	// elements
@@ -89,16 +112,10 @@
 		}
 	}
 
-	// Closing
-	transition: all 200ms;
+	// Close
 	&__close {
 		font-size: 50px;
 		line-height: 1px;
-	}
-	&--is-closed {
-		transform: translateY( 100% );
-		opacity: 0;
-		pointer-events: none;
 	}
 
 	// Options/sharing modal

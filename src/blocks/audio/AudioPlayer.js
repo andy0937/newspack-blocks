@@ -43,7 +43,10 @@ const AudioPlayer = ( { attributes } ) => {
 		return 'Please add an audio source or an RSS Feed URL';
 	}
 	return (
-		<div className={ AUDIO_PLAYER_CLASSNAMES.BASE } data-rss-feed-url={ attributes.rssFeedUrl }>
+		<div
+			className={ classnames( AUDIO_PLAYER_CLASSNAMES.BASE, AUDIO_PLAYER_CLASSNAMES.IS_LOADING ) }
+			data-rss-feed-url={ attributes.rssFeedUrl }
+		>
 			<button className={ AUDIO_PLAYER_CLASSNAMES.PLAY_BUTTON }>
 				<Icon name="play_arrow" className={ AUDIO_PLAYER_CLASSNAMES.PLAY_ICON } />
 			</button>
