@@ -103,6 +103,8 @@
 
 	// Options/sharing modal
 	&__options {
+		// TMP hide
+		display: none !important;
 		.newspack-audio-player__modal {
 			&:after {
 				left: 0;
