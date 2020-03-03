@@ -60,7 +60,6 @@ input[type='range'] {
 		width: 4px;
 		background: transparent;
 		cursor: pointer;
-		height: $track-height;
 	}
 	&::-ms-fill-lower {
 		background: $track-color;
