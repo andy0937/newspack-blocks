@@ -14,7 +14,7 @@ const displayTime = inSeconds => {
 const enableModal = modalTrigger => {
 	const modalContent = modalTrigger.querySelector( `.${ CLASSNAMES.MODAL }` );
 	const isOpen = () => modalContent.classList.contains( CLASSNAMES.MODAL_IS_OPEN );
-	// TODO: check if el exist s
+	// TODO: check if el exists
 	const toggle = () => {
 		if ( isOpen() ) {
 			modalContent.classList.remove( CLASSNAMES.MODAL_IS_OPEN );
@@ -76,17 +76,22 @@ const enableSingleAudioPlayer = playerEl => {
 				throw err;
 			}
 			if ( feed.items.length > 0 ) {
+				const podcastImage = feed.itunes.image;
 				const {
 					title,
 					// link,
 					contentSnippet: description,
 					enclosure: { url },
-					itunes: { image: imageUrl },
+					itunes: { image: imageUrl = podcastImage },
 				} = feed.items[ 0 ];
 				audioEl.setAttribute( 'src', url );
 				audioEl.load();
 
-				imageEl.style.backgroundImage = `url('${ imageUrl }')`;
+				if ( imageUrl ) {
+					imageEl.style.backgroundImage = `url('${ imageUrl }')`;
+				} else {
+					imageEl.style.display = `none`;
+				}
 				titleEl.innerText = title;
 				descriptionEl.innerText = description.replace( /\n/g, ' ' );
 				waitForAudioLoad();
