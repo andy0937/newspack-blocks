@@ -1,6 +1,18 @@
+/**
+ * External dependencies
+ */
 import classnames from 'classnames';
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
 import { AUDIO_PLAYER_CLASSNAMES } from './consts';
+import * as Icons from '../../components/icons';
 
 const Slider = ( { className } ) => (
 	<div
@@ -27,9 +39,13 @@ const Modal = ( { children, className, renderTrigger } ) => (
 	</button>
 );
 
-const Icon = ( { name, className } ) => (
-	<i className={ classnames( 'material-icons', className ) }>{ name }</i>
-);
+const Icon = ( { name, className, style } ) => {
+	// eslint-disable-next-line import/namespace
+	const SVGIcon = Icons[ name ];
+	SVGIcon.props.className = className;
+	SVGIcon.props.style = style;
+	return SVGIcon;
+};
 
 const ModalButton = ( { icon, children } ) => (
 	<div className={ AUDIO_PLAYER_CLASSNAMES.MODAL_BUTTON } tabIndex="0">
@@ -40,7 +56,7 @@ const ModalButton = ( { icon, children } ) => (
 
 const AudioPlayer = ( { attributes } ) => {
 	if ( ! attributes.source && ! attributes.rssFeedUrl ) {
-		return 'Please add an audio source or an RSS Feed URL';
+		return __( 'Please add an audio source or an RSS Feed URL', 'newspack' );
 	}
 	return (
 		<div
@@ -48,7 +64,12 @@ const AudioPlayer = ( { attributes } ) => {
 			data-rss-feed-url={ attributes.rssFeedUrl }
 		>
 			<button className={ AUDIO_PLAYER_CLASSNAMES.PLAY_BUTTON }>
-				<Icon name="play_arrow" className={ AUDIO_PLAYER_CLASSNAMES.PLAY_ICON } />
+				<Icon name="PlayArrow" className={ AUDIO_PLAYER_CLASSNAMES.PLAY_ICON } />
+				<Icon
+					name="Pause"
+					className={ AUDIO_PLAYER_CLASSNAMES.PAUSE_ICON }
+					style={ { display: 'none' } }
+				/>
 			</button>
 
 			<div
@@ -67,10 +88,10 @@ const AudioPlayer = ( { attributes } ) => {
 
 			<Modal
 				className={ AUDIO_PLAYER_CLASSNAMES.OPTIONS_BUTTON }
-				renderTrigger={ () => <Icon name="more_vert" /> }
+				renderTrigger={ () => <Icon name="MoreVert" /> }
 			>
-				<ModalButton icon="link">Copy Link</ModalButton>
-				<ModalButton icon="library_music">Subscribe</ModalButton>
+				<ModalButton icon="Link">Copy Link</ModalButton>
+				<ModalButton icon="LibraryMusic">Subscribe</ModalButton>
 			</Modal>
 
 			<div className={ AUDIO_PLAYER_CLASSNAMES.SLIDER }>
@@ -81,13 +102,13 @@ const AudioPlayer = ( { attributes } ) => {
 
 			<Modal
 				className={ AUDIO_PLAYER_CLASSNAMES.VOLUME_BUTTON }
-				renderTrigger={ () => <Icon name="volume_up" /> }
+				renderTrigger={ () => <Icon name="VolumeUp" /> }
 			>
 				<Slider className={ AUDIO_PLAYER_CLASSNAMES.VOLUME_SLIDER } />
 			</Modal>
 
 			<button className={ AUDIO_PLAYER_CLASSNAMES.CLOSE }>
-				<Icon name="close" />
+				<Icon name="Close" />
 			</button>
 			<audio src={ attributes.source || '' } />
 		</div>

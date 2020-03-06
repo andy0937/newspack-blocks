@@ -9,6 +9,7 @@ export const AUDIO_PLAYER_CLASSNAMES = {
 	// Elements
 	PLAY_BUTTON: `${ BASE }__play`,
 	PLAY_ICON: `${ BASE }__play__icon`,
+	PAUSE_ICON: `${ BASE }__pause__icon`,
 
 	IMAGE: `${ BASE }__image`,
 

@@ -47,7 +47,8 @@ const enableSingleAudioPlayer = playerEl => {
 	// DOM elements
 	const audioEl = playerEl.querySelector( 'audio' );
 	const playBtn = playerEl.querySelector( `.${ CLASSNAMES.PLAY_BUTTON }` );
-	const playIcon = playBtn.querySelector( '.material-icons' );
+	const playIcon = playBtn.querySelector( `.${ CLASSNAMES.PLAY_ICON }` );
+	const pauseIcon = playBtn.querySelector( `.${ CLASSNAMES.PAUSE_ICON }` );
 	const progressBar = playerEl.querySelector( `.${ CLASSNAMES.TIME_SLIDER }` );
 	const progressBarIndicator = progressBar.parentElement.querySelector(
 		`.${ CLASSNAMES.SLIDER_INDICATOR }`
@@ -101,12 +102,14 @@ const enableSingleAudioPlayer = playerEl => {
 
 	// methods
 	const handlePlay = () => {
-		playIcon.innerHTML = 'pause';
+		playIcon.style.display = 'none';
+		pauseIcon.style.display = 'block';
 		interval = setInterval( updateProgressUI, 200 );
 	};
 
 	const handlePause = () => {
-		playIcon.innerHTML = 'play_arrow';
+		playIcon.style.display = 'block';
+		pauseIcon.style.display = 'none';
 		if ( interval ) {
 			clearInterval( interval );
 		}
