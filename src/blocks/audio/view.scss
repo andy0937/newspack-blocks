@@ -123,8 +123,6 @@
 
 	// Options/sharing modal
 	&__options {
-		// TMP hide
-		display: none !important;
 		.newspack-audio-player__modal {
 			&::after {
 				left: 0;
@@ -170,16 +168,28 @@
 		}
 
 		&__trigger {
+			display: none !important;
+			&--is-visible {
+				display: flex !important;
+			}
 			> span {
 				pointer-events: none;
 				@include flex-center;
 			}
 		}
 
-		&__button {
+		&__link {
 			display: flex;
 			align-items: center;
 			padding: 5px;
+			color: #fff !important;
+			text-decoration: none;
+			transition: opacity 300ms;
+			&:hover,
+			&:focus {
+				color: #fff !important;
+				opacity: 0.8;
+			}
 			svg {
 				width: 28px !important;
 				height: 28px !important;

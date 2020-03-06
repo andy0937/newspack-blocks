@@ -26,12 +26,13 @@ const Slider = ( { className } ) => (
 	</div>
 );
 
-const Modal = ( { children, className, renderTrigger } ) => (
+const Modal = ( { children, className, renderTrigger, isVisible } ) => (
 	<button
 		className={ classnames(
 			className,
 			AUDIO_PLAYER_CLASSNAMES.RELATIVE,
-			AUDIO_PLAYER_CLASSNAMES.MODAL_TRIGGER
+			AUDIO_PLAYER_CLASSNAMES.MODAL_TRIGGER,
+			{ [ AUDIO_PLAYER_CLASSNAMES.MODAL_TRIGGER_VISIBLE ]: isVisible }
 		) }
 	>
 		<span>{ renderTrigger() }</span>
@@ -47,21 +48,31 @@ const Icon = ( { name, className, style } ) => {
 	return SVGIcon;
 };
 
-const ModalButton = ( { icon, children } ) => (
-	<div className={ AUDIO_PLAYER_CLASSNAMES.MODAL_BUTTON } tabIndex="0">
+const ModalLink = ( { icon, children, href = '#' } ) => (
+	<a
+		href={ href }
+		target="_blank"
+		rel="noreferrer noopener"
+		className={ AUDIO_PLAYER_CLASSNAMES.MODAL_LINK }
+	>
 		<Icon name={ icon }></Icon>
 		<span>{ children }</span>
-	</div>
+	</a>
 );
 
-const AudioPlayer = ( { attributes } ) => {
-	if ( ! attributes.source && ! attributes.rssFeedUrl ) {
+const AudioPlayer = ( {
+	attributes: { source, rssFeedUrl, imageUrl, title, description, subscribeLink },
+} ) => {
+	if ( ! source && ! rssFeedUrl ) {
 		return __( 'Please add an audio source or an RSS Feed URL', 'newspack' );
 	}
+
+	const copyLink = null;
+
 	return (
 		<div
 			className={ classnames( AUDIO_PLAYER_CLASSNAMES.BASE, AUDIO_PLAYER_CLASSNAMES.IS_LOADING ) }
-			data-rss-feed-url={ attributes.rssFeedUrl }
+			data-rss-feed-url={ rssFeedUrl }
 		>
 			<button className={ AUDIO_PLAYER_CLASSNAMES.PLAY_BUTTON }>
 				<Icon name="PlayArrow" className={ AUDIO_PLAYER_CLASSNAMES.PLAY_ICON } />
@@ -75,23 +86,30 @@ const AudioPlayer = ( { attributes } ) => {
 			<div
 				className={ AUDIO_PLAYER_CLASSNAMES.IMAGE }
 				style={ {
-					backgroundImage: `url('${ attributes.imageUrl }')`,
+					backgroundImage: `url('${ imageUrl }')`,
 				} }
 			/>
 
 			<div className={ AUDIO_PLAYER_CLASSNAMES.TEXT }>
-				<div className={ AUDIO_PLAYER_CLASSNAMES.TITLE }>{ attributes.title || '' }</div>
-				<div className={ AUDIO_PLAYER_CLASSNAMES.DESCRIPTION }>
-					{ attributes.description || '' }
-				</div>
+				<div className={ AUDIO_PLAYER_CLASSNAMES.TITLE }>{ title || '' }</div>
+				<div className={ AUDIO_PLAYER_CLASSNAMES.DESCRIPTION }>{ description || '' }</div>
 			</div>
 
 			<Modal
 				className={ AUDIO_PLAYER_CLASSNAMES.OPTIONS_BUTTON }
+				isVisible={ copyLink || subscribeLink }
 				renderTrigger={ () => <Icon name="MoreVert" /> }
 			>
-				<ModalButton icon="Link">Copy Link</ModalButton>
-				<ModalButton icon="LibraryMusic">Subscribe</ModalButton>
+				{ copyLink && (
+					<ModalLink icon="Link" href={ copyLink }>
+						{ __( 'Copy Link', 'newspack' ) }
+					</ModalLink>
+				) }
+				{ subscribeLink && (
+					<ModalLink href={ subscribeLink } icon="LibraryMusic">
+						{ __( 'Subscribe', 'newspack' ) }
+					</ModalLink>
+				) }
 			</Modal>
 
 			<div className={ AUDIO_PLAYER_CLASSNAMES.SLIDER }>
@@ -110,7 +128,7 @@ const AudioPlayer = ( { attributes } ) => {
 			<button className={ AUDIO_PLAYER_CLASSNAMES.CLOSE }>
 				<Icon name="Close" />
 			</button>
-			<audio src={ attributes.source || '' } />
+			<audio src={ source || '' } />
 		</div>
 	);
 };

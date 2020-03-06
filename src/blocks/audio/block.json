@@ -21,6 +21,10 @@
     "rssFeedUrl": {
       "type": "string",
       "default": ""
+    },
+    "subscribeLink": {
+      "type": "string",
+      "default": ""
     }
   }
 }

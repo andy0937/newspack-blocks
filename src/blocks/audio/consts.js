@@ -36,8 +36,9 @@ export const AUDIO_PLAYER_CLASSNAMES = {
 
 	MODAL: `${ BASE }__modal`,
 	MODAL_TRIGGER: `${ BASE }__modal__trigger`,
+	MODAL_TRIGGER_VISIBLE: `${ BASE }__modal__trigger--is-visible`,
 	MODAL_IS_OPEN: `${ BASE }__modal--is-open`,
-	MODAL_BUTTON: `${ BASE }__modal__button`,
+	MODAL_LINK: `${ BASE }__modal__link`,
 
 	// utility classes
 	RELATIVE: `${ BASE }__relative`,

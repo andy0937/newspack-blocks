@@ -33,6 +33,11 @@ const Edit = ( { attributes, setAttributes } ) => {
 						value={ attributes.rssFeedUrl }
 						onChange={ value => setAttributes( { rssFeedUrl: value } ) }
 					/>
+					<TextControl
+						label={ __( 'Subscribe link (e.g. Overcast, iTunes )' ) }
+						value={ attributes.subscribeLink }
+						onChange={ value => setAttributes( { subscribeLink: value } ) }
+					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Settings' ) } initialOpen={ false }>
